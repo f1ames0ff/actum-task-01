@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import React from 'react';
+import AppSearch from './components/AppSearch';
+import AppTable from "./components/AppTable";
+import { AppApi } from "./api/api";
+import { Container, Navbar } from "react-bootstrap";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+// Because I feel more comfortable with class-based components :)
+export default class App extends React.Component {
+  constructor(params: any) {
+    super(params);
+
+    AppApi.setDefaults();
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <Container>
+          <Navbar expand="lg"
+                  variant="light"
+                  sticky="top"
+                  bg="light">
+            <Navbar.Brand href="#">ACTUM task 01</Navbar.Brand>
+          </Navbar>
+
+          <AppSearch/>
+
+          <hr/>
+
+          <AppTable/>
+
+        </Container>
+      </div>
+    );
+  }
 }
-
-export default App;

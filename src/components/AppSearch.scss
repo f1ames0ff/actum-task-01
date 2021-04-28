@@ -1,0 +1,15 @@
+.autocomplete-input-wrapper {
+  > div {
+    display: flex;
+    justify-content: flex-start;
+
+    > span {
+      flex: 1 1 auto;
+    }
+
+    > button {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
+}
