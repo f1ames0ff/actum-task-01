@@ -1,0 +1,38 @@
+.app-autocomplete {
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+
+  &-list {
+    position: absolute;
+    top: 38px;
+    width: 50%;
+    z-index: 100;
+    text-align: left;
+    box-shadow: 0px 15px 15px rgba(0,0,0,0.1);
+  }
+
+  &-spinner {
+    position: absolute;
+    right: 5px;
+    top: 7px;
+    width: 24px;
+    height: 24px;
+    opacity: 0.5;
+  }
+
+  > span {
+    flex: 1 1 auto;
+
+    input.form-control {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      border-right: none;
+    }
+  }
+
+  > button {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+}

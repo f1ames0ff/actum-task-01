@@ -1,48 +1,47 @@
 import './AppSearch.scss';
-import React, { FormEvent } from "react";
+import React, { ChangeEvent, FormEvent } from "react";
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import { appStore } from "../store/store";
 import { searchThunk } from "../store/reducers/search.reducer";
-import { UserSearchPayload } from "../types/search-user-payload.interface";
 import { setPage } from "../store/reducers/pagination.reducer";
-import TextInput from 'react-autocomplete-input';
 import 'react-autocomplete-input/dist/bundle.css';
+import AppAutocomplete from './AppAutocomplete';
+import { UserSearchPayload } from '../types/search-user-payload.interface';
+
 
 export default class AppSearch extends React.Component {
-  state = { searchStr: '' };
-  private searchOptions = [
-    'name',
-    'language',
-    'location'
-  ];
-  private textInputRef = React.createRef();
+  state = {
+    searchStr: '',
+    inputBehavior: false,
+    behaviorActive: true,
+  };
+
+  get behaviorDescription() {
+    if (this.state.inputBehavior)
+      return 'debounce';
+
+    else
+      return 'throttling';
+  }
 
   render() {
     return (
       <Card>
         <Card.Body>
           <Card.Text>
-            <Form onSubmit={e => this.search(e)}>
+            <Form>
 
               <Row className="autocomplete-input-wrapper">
                 <Col className="col-12">
-                  <TextInput ref={this.textInputRef}
-                             className="form-control"
-                             style={{
-                               borderTopRightRadius: 0,
-                               borderBottomRightRadius: 0,
-                               borderRight: 'none'
-                             }}
-                             Component="input"
-                             trigger={['$']}
-                             options={this.searchOptions}
-                             placeholder="Search github user"
-                             value={this.state.searchStr}
-                             onChange={(e: string) => this.handleSearchChange(e)}
-                             onSelect={(e: any) => this.onSelectOperator(e)}/>
+                  <AppAutocomplete inputBehavior={this.state.inputBehavior}
+                                   behaviorActive={this.state.behaviorActive}/>
 
                   <Button variant="outline-primary"
-                          type="submit"> Search </Button>
+                          id="searchButton"
+                          type="button"
+                          onClick={e => this.search(e)}>
+                    Search
+                  </Button>
                 </Col>
               </Row>
 
@@ -50,6 +49,36 @@ export default class AppSearch extends React.Component {
                 You can search a github user by typing a name or by
                 using special operators: <b>$name:</b>, <b>$language</b> and <b>$location</b>
               </Form.Text>
+
+              <Row>
+                <Col className="col-12 text-left">
+                  <div className="form-check">
+                    <input className="form-check-input"
+                           id="behaviorInput"
+                           type="checkbox"
+                           disabled={!this.state.behaviorActive}
+                           onChange={e => this.inputBehaviorChange(e)}/>
+
+                    <label className="form-check-label"
+                           htmlFor="flexCheckDefault">
+                      {this.behaviorDescription}
+                    </label>
+                  </div>
+
+                  <div className="form-check">
+                    <input className="form-check-input"
+                           id="disableBehaviorInput"
+                           type="checkbox"
+                           onChange={e => this.behaviorActiveChange(e)}/>
+
+                    <label className="form-check-label"
+                           htmlFor="flexCheckDefault">
+                      disable autocomplete behavior (use "Search" button)
+                    </label>
+                  </div>
+                </Col>
+              </Row>
+
             </Form>
           </Card.Text>
         </Card.Body>
@@ -57,24 +86,27 @@ export default class AppSearch extends React.Component {
     );
   }
 
-  private handleSearchChange(value: string) {
-    this.setState({ searchStr: value ?? '' });
+  private inputBehaviorChange(event: ChangeEvent<HTMLInputElement>) {
+    const { checked } = event.currentTarget;
+
+    this.setState({ inputBehavior: checked });
   }
 
-  private onSelectOperator(value: string) {
-    let trimmed = value
-      .slice(0, value.length - 1)
-      .replaceAll(/\$/g, '');
+  private behaviorActiveChange(event: ChangeEvent<HTMLInputElement>) {
+    const { checked } = event.currentTarget;
 
-    this.setState({ searchStr: `${trimmed}:` });
+    this.setState({ behaviorActive: !checked });
   }
 
-  private search(event: FormEvent) {
-    const payload: UserSearchPayload = { q: this.state.searchStr };
+  private dispatchSearch() {
+    const payload: UserSearchPayload = { q: appStore.getState().searchReducer.searchString };
 
     appStore.dispatch(setPage(1));
     appStore.dispatch(searchThunk(payload));
+  }
 
+  private search(event: FormEvent) {
+    this.dispatchSearch();
     event.preventDefault();
   }
 }

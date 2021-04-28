@@ -6,7 +6,7 @@ export abstract class AppApi {
   private static readonly BASE_URL = 'https://api.github.com';
   private static readonly HEADERS = {
     Accept: 'application/vnd.github.v3+json',
-    Authorization: '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'
+    Authorization: 'token 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'
   };
 
   static setDefaults() {

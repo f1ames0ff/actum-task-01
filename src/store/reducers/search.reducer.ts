@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { AppApi } from "../../api/api";
+import { AppApi } from "../../api/rest.api";
 import { UserSearchResult } from "../../types/user-search-result.interface";
 import { UserSearchPayload } from "../../types/search-user-payload.interface";
 import { User } from "../../types/user.interface";
@@ -23,11 +23,14 @@ export const searchSlice = createSlice({
     setTotal(state, action: PayloadAction<number>) {
       state.total = action.payload ?? 0;
     },
+    saveSearchString(state, action: PayloadAction<string>) {
+      state.searchString = action.payload ?? '';
+    },
   }
 });
 
 // Action destructuring
-const { search, setTotal } = searchSlice.actions;
+export const { search, setTotal, saveSearchString } = searchSlice.actions;
 
 // Thunks
 const searchThunkTypePrefix = 'users/search';
@@ -58,5 +61,7 @@ export const searchThunk = createAsyncThunk(
 
     thunkAPI.dispatch(setTotal(total_count));
     thunkAPI.dispatch(search(items));
+
+    return userData.data;
   });
 

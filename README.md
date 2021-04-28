@@ -34,7 +34,8 @@ To run unit tests execute `yarn test`. Test are using integrated Jest platform.
 
 ### Ent-to-End tests
 To run end-to-end follow next instructions:
-* run `yarn run start`
+* run `yarn run start` (if it's not runned yet)
 * wait for the app window to load
 * run `yarn cypress:open`
-* 
+* select `main.test.ts` from a list
+* enjoy magic :)

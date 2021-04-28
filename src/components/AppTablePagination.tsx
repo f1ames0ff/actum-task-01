@@ -19,7 +19,7 @@ export default class AppTablePagination extends React.Component {
   get pageCount(): number {
     const count = Math.ceil(this.itemCount / ITEMS_PER_PAGE);
 
-    // because of the API limit: https://docs.github.com/v3/search/
+    // because of the API limit for non-organization users
     return count < 100 ? count : 100;
   }
 
