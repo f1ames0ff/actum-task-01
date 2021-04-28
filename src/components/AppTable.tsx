@@ -16,7 +16,9 @@ export default class AppTable extends React.Component<unknown, State> {
     page: 1,
     users: []
   };
+
   private storeUnsub: Unsubscribe;
+
 
   constructor(props: any) {
     super(props);
@@ -31,7 +33,7 @@ export default class AppTable extends React.Component<unknown, State> {
   get rows() {
     const avatarSize = 32;
 
-    return this.state.users.map(({ id, login, avatar_url }) => (
+    return this.state.users.map(({ id, login, avatar_url, html_url }) => (
       <tr>
         <td width='10%'>{id}</td>
         <td width='10%'>
@@ -40,7 +42,12 @@ export default class AppTable extends React.Component<unknown, State> {
                  width={avatarSize}
                  height={avatarSize}/>
         </td>
-        <td>{login}</td>
+        <td>
+          <a href={html_url}
+             target="_blank">
+            {login}
+          </a>
+        </td>
       </tr>
     ));
   }

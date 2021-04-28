@@ -1,12 +1,25 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 import AppSearch from "./AppSearch";
 
+let container: Element;
 
-test('renders learn react link', () => {
-  render(<AppSearch />);
+beforeEach(() => {
+  container = document.createElement("div");
+  document.body.appendChild(container);
+});
 
-  const linkElement = screen.getByText(/learn react/i);
+it("AppSearch render test", () => {
+  act(() => {
+    render(<AppSearch/>, { container });
+  });
 
-  expect(linkElement).toBeInTheDocument();
+  const input = container.querySelector('.autocomplete-input-wrapper>div>span>input');
+
+  expect(input).toBeDefined();
+
+  const button = container.querySelector('.autocomplete-input-wrapper>div>button');
+
+  expect(button).toBeDefined();
+  expect(button).toHaveTextContent('Search');
 });

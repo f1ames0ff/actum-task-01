@@ -1,6 +1,6 @@
 import './AppSearch.scss';
 import React, { FormEvent } from "react";
-import { Button, Card, Col, Form, InputGroup, Row } from "react-bootstrap";
+import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import { appStore } from "../store/store";
 import { searchThunk } from "../store/reducers/search.reducer";
 import { UserSearchPayload } from "../types/search-user-payload.interface";
@@ -40,8 +40,7 @@ export default class AppSearch extends React.Component {
                              value={this.state.searchStr}
                              onChange={(e: string) => this.handleSearchChange(e)}
                              onSelect={(e: any) => this.onSelectOperator(e)}/>
-                {/*</Col>*/}
-                {/*<Col className="col-1 pl-0">*/}
+
                   <Button variant="outline-primary"
                           type="submit"> Search </Button>
                 </Col>

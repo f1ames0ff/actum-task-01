@@ -1,6 +1,5 @@
-# Getting Started with Create React App
-
-# task_01
+# ACTUM task_01
+## Task description
 ### goal:
 An application that gives us the possibility to search users [params: username, location, programming language] through the service Github.
 
@@ -21,3 +20,21 @@ styling depends on a developer, feel free to use what you want. The code should 
 ### BONUS
 
 Implement autocomplete using bouncing or throttling and be ready to describe your choice.
+
+## Developer notes
+
+Test app was created with `npx create-react-app` utility.
+Next steps assuming you have already installed dependencies with `yarn`.
+
+### Starting app
+To run the app execute `yarn start` it will run a local dev server and open a new browser tab.
+
+### Unit tests
+To run unit tests execute `yarn test`. Test are using integrated Jest platform.
+
+### Ent-to-End tests
+To run end-to-end follow next instructions:
+* run `yarn run start`
+* wait for the app window to load
+* run `yarn cypress:open`
+* 

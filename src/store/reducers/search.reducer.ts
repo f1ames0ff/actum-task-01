@@ -27,10 +27,7 @@ export const searchSlice = createSlice({
 });
 
 // Action destructuring
-const {
-  search,
-  setTotal
-} = searchSlice.actions;
+const { search, setTotal } = searchSlice.actions;
 
 // Thunks
 const searchThunkTypePrefix = 'users/search';
