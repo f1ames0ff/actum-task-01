@@ -29,7 +29,7 @@ export default class AppAutocomplete extends React.Component {
     throttle: undefined,
   };
   private searchOptions = [
-    'name',
+    'in',
     'language',
     'location'
   ];

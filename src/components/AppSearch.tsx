@@ -47,7 +47,8 @@ export default class AppSearch extends React.Component {
 
               <Form.Text className="text-muted">
                 You can search a github user by typing a name or by
-                using special operators: <b>$name:</b>, <b>$language</b> and <b>$location</b>
+                using special operators: <b>$in:</b> (user name),
+                <b>$language</b> (reposirory language) and <b>$location</b> (profile location)
               </Form.Text>
 
               <Row>
@@ -99,7 +100,8 @@ export default class AppSearch extends React.Component {
   }
 
   private dispatchSearch() {
-    const payload: UserSearchPayload = { q: appStore.getState().searchReducer.searchString };
+    const { searchString } = appStore.getState().searchReducer;
+    const payload: UserSearchPayload = { q: encodeURIComponent(searchString) };
 
     appStore.dispatch(setPage(1));
     appStore.dispatch(searchThunk(payload));
